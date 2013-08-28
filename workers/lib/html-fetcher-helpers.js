@@ -25,7 +25,7 @@ exports.readUrls = function(filePath, cb){
 exports.downloadUrls = function(url){
   //Takes a given url and downloads the page at the current time, the function
   //is called, if the file exists then overwrite it.
-  http.get( url , '../data/sites/' + url, function (error, result) {
+  http.get( url , '../data/sites/' + url , function (error, result) {
     if (error) {
       console.error(error);
     } else {
