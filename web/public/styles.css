@@ -1,4 +1,11 @@
 body {
   margin : 0px;
   font-family: arial, sans-serif;
+  background-color: #fff;
+}
+
+#urlForm {
+  top: 50px;
+  width: 300px;
+  margin: 100px auto 0 auto;
 }

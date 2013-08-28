@@ -1,11 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <link rel="stylesheet" type="text/css" href="public/styles.css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
-  <form method="POST">
-    <input type="input" name="url"></input>
-  </form>
+  <table>
+    <tr>
+      <td>
+        <div id="urlForm">
+          <fieldset><legend>URL Form</legend>
+            <form method="POST" name="urlSearchForm" id="urlSearchForm">
+              <input type="input" name="url"></input>
+              <input type="submit" name="submit" id="formSubmit">
+            </form>
+          </fieldset>
+        </div>
+      </td>
+      <td>
+        <div id="allURLs">
+            <h2>All Searched URLs</h2>
+            <div id="searchedURLs">
+            </div>
+        </div>
+      </td>
+    </tr>
+  </table>
 </body>
+<script>
+  $('#urlSearchForm').on("submit", function(e){
+    var currentURL = document.forms["urlSearchForm"]["url"].value;
+    e.preventDefault();
+    console.log("CURRENT URL: " + currentURL);
+
+    //Stringify a data object that our server will receive
+    var urlObj = JSON.stringify({"url": currentURL});
+    //Send an ajax request to our server
+    $.ajax('http://127.0.0.1:8080/searchURL/',{
+      contentType: 'application/json',
+      type:"POST",
+      data: urlObj,
+      success: function(response){
+        console.log("AJAX SUCCESS");
+      },
+      error: function(response) {
+        console.log('Ajax request failed');
+      }
+    });
+  });
+</script>
 </html>
