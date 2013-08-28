@@ -19,9 +19,32 @@ module.exports.handleRequest = function (req, res) {
   //res.end(exports.datadir);
   console.log("Serving req type " + req.method + " for url " + req.url);
    var userRequestUrl =  req.url;
-   //if the req is for signing up a user
    if(userRequestUrl === '/searchURL/'){
-    console.log("SEARCH URL");
+      var urlObjString = '';
+      req.on('data', function (data) {
+        urlObjString += data;
+      });
+      req.on('end', function () {
+        var urlObj = JSON.parse(urlObjString);
+        var theURL = urlObj.url;
+        console.log(theURL);
+        fs.appendFile(exports.datadir, "\n" + theURL, function(err){
+          if(err){
+            console.log("Error: " + err);
+          } else {
+            console.log("Added URL To File: " + theURL);
+          }
+        });
+      });
+
+    /*console.log("SEARCH URL");
+    fs.writeFile(__dirname + "/data/sites/sites.txt", req.url, function(err) {
+      if(err) {
+          console.log(err);
+      } else {
+          console.log("The file was saved!");
+      }
+    });*/
     res.end("SEARCH URL");
    } else {
 
