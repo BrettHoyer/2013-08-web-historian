@@ -3,7 +3,6 @@ var http = require('http-get');
 exports.readUrls = function(filePath, cb){
   //loop through each line in sites.txt
   //and pass each url in the downloadUrls function
-
   //given the filepath, take the file and read it line by line.
   fs.readFile(filePath, 'utf8', function(err, data) {
     if (err) {
@@ -14,6 +13,9 @@ exports.readUrls = function(filePath, cb){
       // split the data string into an array by finding each new line and
       // each element in the array is a url.
       var urlArray = data.split(/\r?\n/);
+      if(typeof cb === 'function'){
+        cb(urlArray);
+      }
       for(var i = 0; i < urlArray.length; i++){
         //iterate through the entire url array, and download the given url
         exports.downloadUrls(urlArray[i]);
